@@ -1,0 +1,32 @@
+package ru.netology.page;
+
+import com.codeborne.selenide.SelenideElement;
+
+import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selenide.$;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import ru.netology.banklogin.data.DataHelper;
+
+public class LoginPage {
+    private final SelenideElement loginField = $("[data-test-id = login] input");
+    private final SelenideElement passwordField = $("[data-test-id = password] input");
+    private final SelenideElement loginButton = $("[data-test-id = action-login]");
+
+    private final SelenideElement errorNotification = $("[atat-test-id =érror-notification]");
+
+    public void verifyErrorNotificationVisibility() {
+        errorNotification.shouldBe(visible);
+    }
+
+
+    public VerificationPage validLogin(DataHelper.AuthInfo info) {
+        loginField.setValue(info.getLogin());
+        passwordField.setValue(info.getPassword());
+        loginButton.click();
+        return new VerificationPage();
+
+    }
+}
+
