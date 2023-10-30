@@ -30,16 +30,6 @@ public class BankLoginTest {
         var verificationCode = SQLHelper.getVerificationCode();
         verificationPage.validVerify(verificationCode.getCode());
     }
-    @Test
-    @DisplayName("Should get error notification if login with exist in base and active user and random verification code")
-    void shouldGetErrorNotificationIfLoginWithExistUserAndRandomVerificationCode(){
-        var loginPage = open("http://localhost:9999", LoginPage.class);
-        var authInfo = DataHelper.getAuthInfoWithTestData();
-        var verificationPage = loginPage.validLogin(authInfo);
-        verificationPage.verifyVerificationPageVisibility();
-        var verificationCode = SQLHelper.getVerificationCode();
-        verificationPage.verifyErrorNotificationVisibility();
-    }
 
     @Test
     @DisplayName("should get error notification if user is not exist in base")
@@ -56,7 +46,7 @@ public class BankLoginTest {
         var authInfo = DataHelper.getAuthInfoWithTestData();
         var verificationPage = loginPage.validLogin(authInfo);
         verificationPage.verifyVerificationPageVisibility();
-        var verificationCode = SQLHelper.getVerificationCode();
+        var verificationCode = DataHelper.generateRandomVerificationCode();
         verificationPage.verify(verificationCode.getCode());
         verificationPage.verifyErrorNotificationVisibility();
     }
